@@ -9,9 +9,14 @@ from flask_login import UserMixin, login_user, LoginManager, current_user, logou
 from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
 ckeditor = CKEditor(app)
 Bootstrap(app)
 gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False,
@@ -95,7 +100,7 @@ def register():
     if form.validate_on_submit():
         # Check whether email typed in register from already in data base or not and display flash warning
         if User.query.filter_by(email=form.email.data).first():
-            print(User.query.filter_by(email=form.email.data).first())
+
             # Send flash Message
             flash("You've already signed up with that email ,log in instead!")
             return redirect(url_for('login'))
@@ -153,7 +158,7 @@ def logout():
 def show_post(post_id):
     form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
-    print(requested_post)
+
     if form.validate_on_submit():
         if not current_user.is_authenticated:
             flash("You needed to Login or Register to Comment.")
