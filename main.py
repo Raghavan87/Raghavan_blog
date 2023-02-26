@@ -71,8 +71,8 @@ class Comment(db.Model):
 
 
 # this line creates all tables in database
-with app.app_context():
-     db.create_all()
+# with app.app_context():
+#      db.create_all()
 
 
 # create decorator function for admin only
