@@ -48,7 +48,7 @@ class User(UserMixin, db.Model):
 
 
 class BlogPost(db.Model):
-    __tablename__ = "blog_posts"
+    __tablename__ = "blogposts"
     id = db.Column(db.Integer, primary_key=True)
     author_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     author = relationship("User", back_populates="posts")
@@ -71,8 +71,8 @@ class Comment(db.Model):
 
 
 # this line creates all tables in database
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+     db.create_all()
 
 
 # create decorator function for admin only
